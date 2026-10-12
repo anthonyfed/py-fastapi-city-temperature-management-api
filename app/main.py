@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Depends, HTTPException
 
-from app.database import Base, engine, SessionLocal
+from app.database import Base, engine
 from app import models, crud, schemas, dependencies
 import app.models
 from sqlalchemy.orm import Session
@@ -61,7 +61,7 @@ def delete_city(
 
     return db_city
 
-@app.post("/temperature/update", response_model=list[schemas.TemperatureResponse])
+@app.post("/temperatures/update", response_model=list[schemas.TemperatureResponse])
 async def update_temperatures(
         db: Session = Depends(dependencies.get_db)
 ) -> list[models.Temperature]:
@@ -71,7 +71,7 @@ async def update_temperatures(
 
     return temperature_records
 
-@app.get("/temperature", response_model=list[schemas.TemperatureResponse])
+@app.get("/temperatures", response_model=list[schemas.TemperatureResponse])
 def read_temperatures(
         city_id: int | None = None,
         db: Session = Depends(dependencies.get_db)
